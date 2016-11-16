@@ -13,6 +13,6 @@ En caso que se quiera obtener los pensumes nuevamente sólo bastaría con ejecut
     
 El script hasta ahora ha sido testeado sólo en *Python* 2.x.x, pero debería funcionar bien en Python 3.
 
-### TODO: ###
+### Estatus actual: ###
 
-Iniciar etapa de creación de la app con Ionic y Angular JS 2.
+Creado proyecto Ionic inicial. Trabajando en la app.
