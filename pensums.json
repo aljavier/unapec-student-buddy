@@ -1,0 +1,651 @@
+[
+  {
+    "carreras": [
+      {
+        "descripcion": "Ingenier\u00eda de Software", 
+        "codigo": "ISO", 
+        "pensum": [
+          {
+            "descripcion": "Cuatrimestre 01", 
+            "asignaturas": [
+              {
+                "pre_requisitos": "", 
+                "codigo": "ESP101", 
+                "asignatura": "ANALISIS DE TEXTOS DISCURSIVOS", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "", 
+                "codigo": "ISO100", 
+                "asignatura": "FUNDAMENTOS DE INFORMATICA Y ALGORITMOS", 
+                "creditos": 5
+              }, 
+              {
+                "pre_requisitos": "", 
+                "codigo": "ISO105", 
+                "asignatura": "FUNDAMENTOS DE SISTEMAS OPERATIVOS Y COMUNICACIONES", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "", 
+                "codigo": "MAT126", 
+                "asignatura": "MATEMATICA BASICA PARA INGENIERIA", 
+                "creditos": 4
+              }, 
+              {
+                "pre_requisitos": "", 
+                "codigo": "SOC011", 
+                "asignatura": "HISTORIA SOCIAL DOMINICANA", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "", 
+                "codigo": "SOC030", 
+                "asignatura": "ORIENTACION UNIVERSITARIA", 
+                "creditos": 2
+              }, 
+              {
+                "pre_requisitos": "", 
+                "codigo": "TEC098", 
+                "asignatura": "INTRODUCCION A LA INGENIERIA", 
+                "creditos": 2
+              }, 
+              {
+                "pre_requisitos": "", 
+                "codigo": "ENG001", 
+                "asignatura": "INGLES I", 
+                "creditos": 3
+              }
+            ]
+          }, 
+          {
+            "descripcion": "Cuatrimestre 02", 
+            "asignaturas": [
+              {
+                "pre_requisitos": "ESP101", 
+                "codigo": "ESP102", 
+                "asignatura": "REDACCION DE TEXTOS DISCURSIVOS I", 
+                "creditos": 4
+              }, 
+              {
+                "pre_requisitos": "MAT126", 
+                "codigo": "ING701", 
+                "asignatura": "FISICA I Y LABORATORIO", 
+                "creditos": 5
+              }, 
+              {
+                "pre_requisitos": "ISO100  ISO105", 
+                "codigo": "ISO200", 
+                "asignatura": "PROGRAMACION Y ESTRUCTURAS DE DATOS", 
+                "creditos": 5
+              }, 
+              {
+                "pre_requisitos": "MAT126", 
+                "codigo": "MAT127", 
+                "asignatura": "MATEMATICA SUPERIOR PARA INGENIERIA", 
+                "creditos": 5
+              }, 
+              {
+                "pre_requisitos": "", 
+                "codigo": "SOC043", 
+                "asignatura": "GESTION AMBIENTAL", 
+                "creditos": 2
+              }, 
+              {
+                "pre_requisitos": "ENG001", 
+                "codigo": "ENG002", 
+                "asignatura": "INGLES II", 
+                "creditos": 3
+              }
+            ]
+          }, 
+          {
+            "descripcion": "Cuatrimestre 03", 
+            "asignaturas": [
+              {
+                "pre_requisitos": "ESP102", 
+                "codigo": "ESP103", 
+                "asignatura": "REDACCION DE TEXTOS DISCURSIVOS II", 
+                "creditos": 4
+              }, 
+              {
+                "pre_requisitos": "ISO200", 
+                "codigo": "INF111", 
+                "asignatura": "PROGRAMACION ORIENTADA  A OBJETOS", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ISO200", 
+                "codigo": "ISO300", 
+                "asignatura": "FUNDAMENTOS DE INGENIERIA DE SOFTWARE", 
+                "creditos": 4
+              }, 
+              {
+                "pre_requisitos": "ISO200", 
+                "codigo": "ISO305", 
+                "asignatura": "DISE\u00d1O WEB I", 
+                "creditos": 4
+              }, 
+              {
+                "pre_requisitos": "MAT127", 
+                "codigo": "MAT222", 
+                "asignatura": "ALGEBRA LINEAL", 
+                "creditos": 4
+              }, 
+              {
+                "pre_requisitos": "", 
+                "codigo": "SOC150", 
+                "asignatura": "RELACIONES HUMANAS", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ENG002", 
+                "codigo": "ENG003", 
+                "asignatura": "INGLES III", 
+                "creditos": 3
+              }
+            ]
+          }, 
+          {
+            "descripcion": "Cuatrimestre 04", 
+            "asignaturas": [
+              {
+                "pre_requisitos": "MAT222", 
+                "codigo": "CON107", 
+                "asignatura": "CONTABILIDAD EMPRESARIAL", 
+                "creditos": 5
+              }, 
+              {
+                "pre_requisitos": "INF111", 
+                "codigo": "INF164", 
+                "asignatura": "BASE DE DATOS I", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "INF111", 
+                "codigo": "ISO400", 
+                "asignatura": "ANALISIS Y DISE\u00d1O ORIENTADO A OBJETOS", 
+                "creditos": 4
+              }, 
+              {
+                "pre_requisitos": "INF111", 
+                "codigo": "ISO405", 
+                "asignatura": "SISTEMAS OPERATIVOS AVANZADOS", 
+                "creditos": 4
+              }, 
+              {
+                "pre_requisitos": "ISO300", 
+                "codigo": "ISO410", 
+                "asignatura": "VERIFICACION Y VALIDACION DE SOFTWARE", 
+                "creditos": 4
+              }, 
+              {
+                "pre_requisitos": "MAT222", 
+                "codigo": "MAT131", 
+                "asignatura": "CALCULO Y GEOMETRIA ANALITICA I", 
+                "creditos": 5
+              }, 
+              {
+                "pre_requisitos": "ENG003", 
+                "codigo": "ENG004", 
+                "asignatura": "INGLES IV", 
+                "creditos": 3
+              }
+            ]
+          }, 
+          {
+            "descripcion": "Cuatrimestre 05", 
+            "asignaturas": [
+              {
+                "pre_requisitos": "INF164", 
+                "codigo": "INF165", 
+                "asignatura": "BASE DE DATOS II", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "INF164  ISO305", 
+                "codigo": "INF244", 
+                "asignatura": "PROGRAMACION WEB I", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ING701", 
+                "codigo": "ING702", 
+                "asignatura": "FISICA II Y LABORATORIO", 
+                "creditos": 5
+              }, 
+              {
+                "pre_requisitos": "ISO400", 
+                "codigo": "ISO500", 
+                "asignatura": "INGENIERIA DE REQUISITOS", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ISO410", 
+                "codigo": "ISO505", 
+                "asignatura": "INGENIERIA DE LA USABILIDAD", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "MAT131", 
+                "codigo": "MAT132", 
+                "asignatura": "CALCULO Y GEOMETRIA ANALITICA II", 
+                "creditos": 5
+              }, 
+              {
+                "pre_requisitos": "ENG004", 
+                "codigo": "ENG005", 
+                "asignatura": "INGLES V", 
+                "creditos": 3
+              }
+            ]
+          }, 
+          {
+            "descripcion": "Cuatrimestre 06", 
+            "asignaturas": [
+              {
+                "pre_requisitos": "ISO500", 
+                "codigo": "ISO600", 
+                "asignatura": "ADMINISTRACION DE CONFIGURACION", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "INF165  INF244  ISO505", 
+                "codigo": "ISO605", 
+                "asignatura": "DESARROLLO DE SOFTWARE CON TECNOLOGIA PROPIETARIA I", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "INF165  INF244  ISO505", 
+                "codigo": "ISO610", 
+                "asignatura": "DESARROLLO DE SOFTWARE CON TECNOLOGIA OPEN SOURCE I", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "MAT132", 
+                "codigo": "MAT151", 
+                "asignatura": "MATEMATICA DISCRETA", 
+                "creditos": 4
+              }, 
+              {
+                "pre_requisitos": "MAT132", 
+                "codigo": "MAT252", 
+                "asignatura": "PROBABILIDAD Y ESTADISTICA", 
+                "creditos": 4
+              }, 
+              {
+                "pre_requisitos": "", 
+                "codigo": "SOC031", 
+                "asignatura": "ETICA PROFESIONAL", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ENG005", 
+                "codigo": "ENG006", 
+                "asignatura": "INGLES VI", 
+                "creditos": 3
+              }
+            ]
+          }, 
+          {
+            "descripcion": "Cuatrimestre 07", 
+            "asignaturas": [
+              {
+                "pre_requisitos": "", 
+                "codigo": "ADM091", 
+                "asignatura": "ADMINISTRACION I", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "INF244", 
+                "codigo": "ISO700", 
+                "asignatura": "GESTION DE SITIOS WEB", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ISO600  ISO605  ISO610", 
+                "codigo": "ISO705", 
+                "asignatura": "PROYECTO DE SOFTWARE I", 
+                "creditos": 4
+              }, 
+              {
+                "pre_requisitos": "ISO605", 
+                "codigo": "ISO710", 
+                "asignatura": "DESARROLLO DE SOFTWARE CON TECNOLOGIA PROPIETARIA II", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ISO610", 
+                "codigo": "ISO715", 
+                "asignatura": "DESARROLLO DE SOFTWARE CON TECNOLOGIA OPEN SOURCE II", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ENG006", 
+                "codigo": "ENG007", 
+                "asignatura": "INGLES VII", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "55% De los cr\u00e9ditos aprobados", 
+                "codigo": "SOC250", 
+                "asignatura": "METODOLOGIA DE LA INVESTIGACION CIENTIFICA", 
+                "creditos": 3
+              }
+            ]
+          }, 
+          {
+            "descripcion": "Cuatrimestre 08", 
+            "asignaturas": [
+              {
+                "pre_requisitos": "ADM091", 
+                "codigo": "ADM150", 
+                "asignatura": "GERENCIA DE PROCESOS", 
+                "creditos": 4
+              }, 
+              {
+                "pre_requisitos": "ENG008", 
+                "codigo": "IDI045", 
+                "asignatura": "INGLES PARA INFORMATICA I", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ISO600", 
+                "codigo": "ISO915", 
+                "asignatura": "FUNDAMENTOS DE SEGURIDAD DE SOFTWARE", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ISO705", 
+                "codigo": "ISO800", 
+                "asignatura": "GESTION DE CALIDAD DE SOFTWARE", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ISO705", 
+                "codigo": "ISO805", 
+                "asignatura": "GESTION DE PROYECTOS DE SOFTWARE", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ISO710", 
+                "codigo": "ISO810", 
+                "asignatura": "INTEGRACION DE APLICACIONES CON TECNOLOGIA PROPIETARIA", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ISO715", 
+                "codigo": "ISO815", 
+                "asignatura": "INTEGRACION DE APLICACIONES CON TECNOLOGIA OPEN SOURCE", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ENG007", 
+                "codigo": "ENG008", 
+                "asignatura": "INGLES VIII", 
+                "creditos": 3
+              }
+            ]
+          }, 
+          {
+            "descripcion": "Cuatrimestre 09", 
+            "asignaturas": [
+              {
+                "pre_requisitos": "ADM091", 
+                "codigo": "ADM120", 
+                "asignatura": "LIDERAZGO Y TECNICAS DE SUPERVISION", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "IDI045", 
+                "codigo": "IDI046", 
+                "asignatura": "INGLES PARA INFORMATICA II", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ADM150", 
+                "codigo": "IND423", 
+                "asignatura": "INGENIERIA ECONOMICA", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ISO800  ISO805", 
+                "codigo": "ISO900", 
+                "asignatura": "ADMINISTRACION DE DESARROLLO", 
+                "creditos": 4
+              }, 
+              {
+                "pre_requisitos": "ISO810", 
+                "codigo": "ISO905", 
+                "asignatura": "ARQUITECTURA DE DESARROLLO CON TECNOLOGIA PROPIETARIA", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ISO815", 
+                "codigo": "ISO910", 
+                "asignatura": "ARQUITECTURA DE DESARROLLO CON TECNOLOGIA OPEN SOURCE", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ISO915", 
+                "codigo": "INF333", 
+                "asignatura": "ADMINISTRACION DE LA SEGURIDAD DE LA INFORMACION", 
+                "creditos": 4
+              }
+            ]
+          }, 
+          {
+            "descripcion": "Cuatrimestre 10", 
+            "asignaturas": [
+              {
+                "pre_requisitos": "ADM120", 
+                "codigo": "ADM535", 
+                "asignatura": "ACTITUD EMPRENDEDORA", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ISO900", 
+                "codigo": "ISO920", 
+                "asignatura": "ESTANDARES DE LA INDUSTRIA DEL SOFTWARE", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ISO905", 
+                "codigo": "ISO923", 
+                "asignatura": "IMPLEMENTACION DE E-COMMERCE CON TECNOLOGIA PROPIETARIA", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ISO910", 
+                "codigo": "ISO926", 
+                "asignatura": "IMPLEMENTACION DE E-COMMERCE CON TECNOLOGIA OPEN SOURCE", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ISO905  ISO910", 
+                "codigo": "ISO929", 
+                "asignatura": "ESTRATEGIAS DE COMERCIO ELECTRONICO", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ISO710  ISO715", 
+                "codigo": "ISO931", 
+                "asignatura": "INTELIGENCIA DE NEGOCIOS", 
+                "creditos": 3
+              }
+            ]
+          }, 
+          {
+            "descripcion": "Cuatrimestre 11", 
+            "asignaturas": [
+              {
+                "pre_requisitos": "ISO920", 
+                "codigo": "INF335", 
+                "asignatura": "AUDITORIA INFORMATICA", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "ISO900", 
+                "codigo": "ISO934", 
+                "asignatura": "PROYECTO DE SOFTWARE II", 
+                "creditos": 4
+              }, 
+              {
+                "pre_requisitos": "ISO931", 
+                "codigo": "ISO937", 
+                "asignatura": "COMPUTACION UBICUA", 
+                "creditos": 4
+              }, 
+              {
+                "pre_requisitos": "ISO931", 
+                "codigo": "ISO939", 
+                "asignatura": "INTEGRACION DE APLICACIONES CORPORATIVAS", 
+                "creditos": 3
+              }, 
+              {
+                "pre_requisitos": "80% De los cr\u00e9ditos aprobados", 
+                "codigo": "SOC281", 
+                "asignatura": "SEMINARIO DE GRADO", 
+                "creditos": 3
+              }
+            ]
+          }, 
+          {
+            "descripcion": "Cuatrimestre 12", 
+            "asignaturas": [
+              {
+                "pre_requisitos": "", 
+                "codigo": "OPTDEP", 
+                "asignatura": "OPTATIVA DEPORTE", 
+                "creditos": 0
+              }, 
+              {
+                "pre_requisitos": "", 
+                "codigo": "PAS261", 
+                "asignatura": "PASANTIA EMPRESARIAL", 
+                "creditos": 0
+              }, 
+              {
+                "pre_requisitos": "SOC281  \r\n                                                            92% De los cr\u00e9ditos aprobados", 
+                "codigo": "TES-MON", 
+                "asignatura": "TRABAJO DE GRADO O CURSO MONOGRAFICO", 
+                "creditos": 6
+              }
+            ]
+          }
+        ]
+      }, 
+      {
+        "descripcion": "Ingenier\u00eda en Sistemas de Computaci\u00f3n", 
+        "codigo": "ISC", 
+        "pensum": []
+      }, 
+      {
+        "descripcion": "Ingenier\u00eda El\u00e9ctrica", 
+        "codigo": "INE", 
+        "pensum": []
+      }, 
+      {
+        "descripcion": "Ingenier\u00eda Electr\u00f3nica", 
+        "codigo": "IEL", 
+        "pensum": []
+      }, 
+      {
+        "descripcion": "Ingenier\u00eda Industrial", 
+        "codigo": "IND", 
+        "pensum": []
+      }
+    ], 
+    "escuela": "Ingenier\u00eda e Inform\u00e1tica"
+  }, 
+  {
+    "carreras": [
+      {
+        "descripcion": "Administraci\u00f3n de Empresas", 
+        "codigo": "adm", 
+        "pensum": []
+      }
+    ], 
+    "escuela": "Administraci\u00f3n"
+  }, 
+  {
+    "carreras": [
+      {
+        "descripcion": "Licenciatura en Mercadotecnia", 
+        "codigo": "mer", 
+        "pensum": []
+      }, 
+      {
+        "descripcion": "Licenciatura en Negocios Internacionales", 
+        "codigo": "nin", 
+        "pensum": []
+      }
+    ], 
+    "escuela": "Mercadeo"
+  }, 
+  {
+    "carreras": [
+      {
+        "descripcion": "Licenciatura en Contabilidad", 
+        "codigo": "con", 
+        "pensum": []
+      }, 
+      {
+        "descripcion": "T\u00e9cnico Analista Financiero", 
+        "codigo": "taf", 
+        "pensum": []
+      }, 
+      {
+        "descripcion": "Licenciatura en Finanzas", 
+        "codigo": "fin", 
+        "pensum": []
+      }
+    ], 
+    "escuela": "Contabilidad"
+  }, 
+  {
+    "carreras": [
+      {
+        "descripcion": "Administraci\u00f3n Tur\u00edstica y Hotelera", 
+        "codigo": "ATH", 
+        "pensum": []
+      }
+    ], 
+    "escuela": "Turismo"
+  }, 
+  {
+    "carreras": [
+      {
+        "descripcion": "Licenciatura en Comunicaci\u00f3n Digital", 
+        "codigo": "CDG", 
+        "pensum": []
+      }, 
+      {
+        "descripcion": "Licencitura en Dise\u00f1o de Interiores", 
+        "codigo": "DIN", 
+        "pensum": []
+      }, 
+      {
+        "descripcion": "Licenciatura en Dise\u00f1o Gr\u00e1fico", 
+        "codigo": "DIG", 
+        "pensum": []
+      }, 
+      {
+        "descripcion": "Licenciatura en Publicidad", 
+        "codigo": "PUB", 
+        "pensum": []
+      }
+    ], 
+    "escuela": "Artes y Comunicaci\u00f3n"
+  }, 
+  {
+    "carreras": [
+      {
+        "descripcion": "Licenciatura en Derecho", 
+        "codigo": "DER", 
+        "pensum": []
+      }
+    ], 
+    "escuela": "Derecho"
+  }
+]
