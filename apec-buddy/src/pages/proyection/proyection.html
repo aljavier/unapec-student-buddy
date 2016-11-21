@@ -22,36 +22,43 @@
       </ion-select>
     </ion-item>
     
-  </ion-list>
-  <ion-list>
     <ion-item *ngIf="selectedSchool">
       <ion-label>Carrera</ion-label>
       <ion-select [(ngModel)]="selectedCareer">
-        <ion-option *ngFor="let ca of careers" [value]="ca">{{ ca.description }}</ion-option> 
+        <ion-option ngValue="ca" *ngFor="let ca of careers" [value]="ca">{{ ca.description }}</ion-option> 
       </ion-select>
     </ion-item>
   </ion-list>
-    <ion-list *ngIf="selectedCareer">
+  
+  <ion-card>
+    <ion-card-content>
+      <ion-label>Indíce Acumulado:</ion-label>
+      <ion-label [(ngModel)]="GPA"></ion-label>
+    </ion-card-content>
+  </ion-card>
+  
+  <ion-list *ngIf="selectedCareer">
       <ion-list *ngFor="let quarter of selectedCareer.pensum">
         <ion-list-header>{{ quarter.description }}</ion-list-header>
           <ion-item *ngFor="let subject of quarter.subjects">
              <h2>{{ subject.code }} - {{ subject.name }}</h2>
-             <p>{{ subject.credits }} créditos</p>
-             <p>Pre-requisitos: {{ subject.pre_requisits || 'Ninguno'}}</p>
-             <button ion-button icon-left color="danger">
-               <ion-icon name="trash"></ion-icon>
-               Quitar
+             <ion-item no-lines>
+                <ion-avatar item-left>
+                  <img src="assets/images/{{ subject.calification || 'A' }}.png">
+                </ion-avatar>
+               <p>{{ subject.credits }} créditos</p>
+               <p>Pre-requisitos: {{ subject.pre_requisits || 'Ninguno'}}</p>
+             </ion-item>
+             <button ion-button icon-left color="light" (click)="deleteSubject(quarter, subject)">
+               <ion-icon name="trash"></ion-icon>Quitar
              </button>
-              <button ion-button icon-left color="info">
-               <ion-icon name="paper"></ion-icon>
-               Calificar
+             <button ion-button icon-left (click)="changeCalification(subject)">
+               <ion-icon name="paper"></ion-icon>Cambiar Nota
              </button>
+             
           </ion-item>
           <ion-item>
-            <button ion-button color="secondary" full>
-              <ion-icon name="add"></ion-icon>
-              Otra asignatura
-            </button>
+             <button ion-fab right color="danger"><ion-icon name="trash"></ion-icon></button>
           </ion-item>
       </ion-list>
     </ion-list>

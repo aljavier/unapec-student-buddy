@@ -3,5 +3,5 @@ export class Subject {
     name: string;
     credits: number;
     pre_requisits: string;
-    
+    calification: string = 'A';
 }

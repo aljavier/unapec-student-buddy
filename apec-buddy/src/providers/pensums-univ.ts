@@ -18,10 +18,7 @@ export class PensumsUniv {
   
   url: string = 'pensums.json';
   
-  constructor(public http: Http) {
-    console.log('Hello PensumsUniv Provider');
-    
-  }
+  constructor(public http: Http) { }
   
     load(): Promise<School[]> {
       return this.http.get(this.url)

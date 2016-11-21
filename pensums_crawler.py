@@ -12,62 +12,69 @@ OUTPUT_FILE = 'pensums.json'
 
 offers = [
            {
-               'escuela': 'Ingeniería e Informática', 
-               'carreras': 
+               'name': 'Ingeniería e Informática', 
+               'code': 'ing',
+               'careers': 
                 [
-                    {'codigo': 'ISO', 'descripcion': 'Ingeniería de Software', 'pensum': [] },
-                    {'codigo': 'ISC', 'descripcion': 'Ingeniería en Sistemas de Computación', 'pensum': [] },
-                    {'codigo': 'INE', 'descripcion': 'Ingeniería Eléctrica', 'pensum': [] },
-                    {'codigo': 'IEL', 'descripcion': 'Ingeniería Electrónica', 'pensum': [] },
-                    {'codigo': 'IND', 'descripcion': 'Ingeniería Industrial', 'pensum': [] }
+                    {'code': 'ISO', 'description': 'Ingeniería de Software', 'pensum': [] },
+                    {'code': 'ISC', 'description': 'Ingeniería en Sistemas de Computación', 'pensum': [] },
+                    {'code': 'INE', 'description': 'Ingeniería Eléctrica', 'pensum': [] },
+                    {'code': 'IEL', 'description': 'Ingeniería Electrónica', 'pensum': [] },
+                    {'code': 'IND', 'description': 'Ingeniería Industrial', 'pensum': [] }
                 ]    
             },
             {
-                'escuela': 'Administración',
-                'carreras':
+                'name': 'Administración',
+                'code': 'adm',
+                'careers':
                 [
-                    {'codigo': 'adm', 'descripcion': 'Administración de Empresas', 'pensum': [] }    
+                    {'code': 'adm', 'description': 'Administración de Empresas', 'pensum': [] }    
                 ]
             },
             {
-                'escuela': 'Mercadeo',
-                'carreras':
+                'name': 'Mercadeo',
+                'code': 'mer',
+                'careers':
                 [
-                    {'codigo': 'mer', 'descripcion': 'Licenciatura en Mercadotecnia', 'pensum': [] },
-                    {'codigo': 'nin', 'descripcion': 'Licenciatura en Negocios Internacionales', 'pensum': [] }
+                    {'code': 'mer', 'description': 'Licenciatura en Mercadotecnia', 'pensum': [] },
+                    {'code': 'nin', 'description': 'Licenciatura en Negocios Internacionales', 'pensum': [] }
                 ]
             },
             {
-                'escuela': 'Contabilidad',
-                'carreras':
+                'name': 'Contabilidad',
+                'code': 'cont',
+                'careers':
                 [
-                    {'codigo': 'con', 'descripcion': 'Licenciatura en Contabilidad', 'pensum': [] },
-                    {'codigo': 'taf', 'descripcion': 'Técnico Analista Financiero', 'pensum': [] },
-                    {'codigo': 'fin', 'descripcion': 'Licenciatura en Finanzas', 'pensum': [] }
+                    {'code': 'con', 'description': 'Licenciatura en Contabilidad', 'pensum': [] },
+                    {'code': 'taf', 'description': 'Técnico Analista Financiero', 'pensum': [] },
+                    {'code': 'fin', 'description': 'Licenciatura en Finanzas', 'pensum': [] }
                 ]
             },
             {
-                'escuela': 'Turismo',
-                'carreras':
+                'name': 'Turismo',
+                'code': 'ath',
+                'careers':
                 [
-                    {'codigo': 'ATH', 'descripcion': 'Administración Turística y Hotelera', 'pensum': [] }
+                    {'code': 'ATH', 'description': 'Administración Turística y Hotelera', 'pensum': [] }
                 ]
             },
             {
-                'escuela': 'Artes y Comunicación',
-                'carreras':
+                'name': 'Artes y Comunicación',
+                'code': 'art',
+                'careers':
                 [
-                    {'codigo': 'CDG', 'descripcion': 'Licenciatura en Comunicación Digital', 'pensum': [] },
-                    {'codigo': 'DIN', 'descripcion': 'Licencitura en Diseño de Interiores', 'pensum': [] },
-                    {'codigo': 'DIG', 'descripcion': 'Licenciatura en Diseño Gráfico', 'pensum': [] },
-                    {'codigo': 'PUB', 'descripcion': 'Licenciatura en Publicidad', 'pensum': [] }
+                    {'code': 'CDG', 'description': 'Licenciatura en Comunicación Digital', 'pensum': [] },
+                    {'code': 'DIN', 'description': 'Licencitura en Diseño de Interiores', 'pensum': [] },
+                    {'code': 'DIG', 'description': 'Licenciatura en Diseño Gráfico', 'pensum': [] },
+                    {'code': 'PUB', 'description': 'Licenciatura en Publicidad', 'pensum': [] }
                 ]
             },
             {
-                'escuela': 'Derecho',
-                'carreras':
+                'name': 'Derecho',
+                'code': 'der',
+                'careers':
                 [
-                    {'codigo': 'DER', 'descripcion': 'Licenciatura en Derecho', 'pensum': [] }    
+                    {'code': 'DER', 'description': 'Licenciatura en Derecho', 'pensum': [] }    
                 ]
             }
          ]
@@ -76,46 +83,46 @@ offers = [
 def get_pensum_list():
     print('Iniciando scraping para obtener los pensumes desde unapec.edu.do...')
     quantity_offers = len(offers)
-    offers_count = 1
-    for offer in offers[:1]: # DEBUG - Quitar filtro luego
-        careers = offer['carreras']
+    offers_count = 0
+    for offer in offers: 
+        careers = offer['careers']
         quantity_careers = len(careers)
-        careers_count = 1
-        for career in careers[:1]: # DEBUG - Quitar filtro luego
+        careers_count = 0
+        for career in careers: 
             _pensum = get_pensum(career)
-            _career = offers[0]['carreras'][0]
-            offers[0]['carreras'][0]['pensum'] = _pensum
-            print('Procesadas {0}/{1} carreras de la escuela de {2}'.format(careers_count, quantity_careers, offer['escuela']))
+            offers[offers_count]['careers'][careers_count]['pensum'] = _pensum
+            print('Procesadas {0}/{1} carreras de la escuela de {2}'.format(careers_count+1, quantity_careers, offer['name']))
             careers_count = careers_count+1
-        print('Procesadas {0}/{1} escuelas'.format(offers_count, quantity_offers))
+        print('Procesadas {0}/{1} escuelas'.format(offers_count+1, quantity_offers))
         offers_count = offers_count+1
     export_to_json(offers)
     print('Información guardada en archivo %s' % OUTPUT_FILE)
             
 def get_pensum(career):
-    url_request = BASE_URL + career['codigo']
+    url_request = BASE_URL + career['code']
     request = urllib2.Request(url_request)
     request.add_header('User-Agent', USER_AGENT)
     
-    print('Pensum de {0} desde {1}'.format(career['descripcion'], url_request))
+    print('Pensum de {0} desde {1}'.format(career['description'], url_request))
     
     data = urllib2.urlopen(request).read()
     
     soup =  BeautifulSoup(data, 'html.parser')
     quarters=[]
-    
+
     count=1
     for quarter in soup.find_all('table', class_='cuatrim'):
         subjects=[]
         for row in quarter.find_all('tr'):
             tds = row.find_all('td')
             if len(tds) > 0:
-                subjects.append({ 'codigo': tds[0].get_text().strip(), 
-                                  'asignatura': tds[1].get_text().strip(), 
-                                  'creditos': int(tds[2].get_text().strip()), 
-                                  'pre_requisitos': tds[3].get_text().strip() 
+                subjects.append({ 'code': tds[0].get_text().strip(), 
+                                  'name': tds[1].get_text().strip(), 
+                                  'credits': int(tds[2].get_text().strip()), 
+                                  'pre_requisits': tds[3].get_text().strip(),
+                                  'calification': 'A' # Necesito ese campo en el mapping en la app
                            })
-        quarters.append({ 'descripcion': ('Cuatrimestre %s' % str(count).zfill(2)), 'asignaturas': subjects })
+        quarters.append({ 'description': ('Cuatrimestre %s' % str(count).zfill(2)), 'subjects': subjects })
         count = count+1
     return quarters
     
