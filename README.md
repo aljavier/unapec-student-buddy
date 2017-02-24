@@ -13,12 +13,12 @@ En caso que se quiera obtener los pensumes nuevamente sólo bastaría con ejecut
     
 El script hasta ahora ha sido testeado sólo en *Python* 2.x.x, pero debería funcionar bien en Python 3.
 
+### Iniciar servidor en cloud9 ###
+
+ionic serve --host "$IP" --port "$PORT"
+
 ### Estatus actual: ###
 
 ~~Creado proyecto Ionic inicial. Trabajando en la app.~~
 
 Trabajando en calculo de GPA.
-
-### Iniciar servidor en cloud9 ###
-
-ionic serve --host "$IP" --port "$PORT"
