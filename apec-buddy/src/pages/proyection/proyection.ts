@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, ToastController } from 'ionic-angular';
 import { PensumsUniv } from '../../providers/pensums-univ';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/toPromise';
 
 import { School } from '../../models/school';
+import { Quarter } from '../../models/quarter';
 import { Career } from '../../models/career';
+import { Subject } from '../../models/subject';
+
+import { Calification } from '../../enums/Calification';
+
 /*
   Generated class for the Proyection page.
 
@@ -18,13 +23,18 @@ import { Career } from '../../models/career';
   templateUrl: 'proyection.html'
 })
 export class ProyectionPage implements OnInit {
+  
+  public Calification = Calification;
+  
   schools: Array<School>;
   careers: Array<Career>;
   selectedSchool: School;
   selectedCareer: Career;
-  GPA: number = 4.0;
+  GPA: number = 0.00;
+  quarterList: Array<Quarter>;
   
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController,  private pensums: PensumsUniv ) {}
+  constructor(public navCtrl: NavController, public alertCtrl: AlertController,  
+      private pensums: PensumsUniv, private toastCtrl: ToastController) { }
 
   ionViewDidLoad() {  }
 
@@ -35,52 +45,78 @@ export class ProyectionPage implements OnInit {
   changeSchool(selected): void {
        this.careers = selected.careers;
        this.selectedCareer = null;
+       this.quarterList = Array<Quarter>();
+  }
+  
+  changeCareer(career): void {
+    this.quarterList.push(career.pensum[0]); // Primer cuatrimestre
   }
   
   changeCalification(subject): void {
     let alert = this.alertCtrl.create();
     alert.setTitle('Calificación');
-    
+
     alert.addInput({ 
       type: 'radio',
       label: 'A (90-100)',
-      value: 'A',
-      checked: (subject.calification == 'A')
+      value: Calification[Calification.A],
+      checked: (subject.calification == Calification.A)
     });
     
     alert.addInput({ 
       type: 'radio',
       label: 'B (80-89)',
-      value: 'B',
-      checked: (subject.calification == 'B')
+      value: Calification[Calification.B],
+      checked: (subject.calification == Calification.B)
     });
     
     alert.addInput({ 
       type: 'radio',
       label: 'C (70-79)',
-      value: 'C',
-      checked: (subject.calification == 'C')
+      value: Calification[Calification.C],
+      checked: (subject.calification == Calification.C)
     });
     
     alert.addInput({ 
       type: 'radio',
       label: 'D (60-69, Reprobado)',
-      value: 'D',
-      checked: (subject.calification == 'D')
+      value: Calification[Calification.D],
+      checked: (subject.calification == Calification.D)
     });
     
     alert.addInput({ 
       type: 'radio',
       label: 'F (0-59, Reprobado)',
-      value: 'F',
-      checked: (subject.calification == 'F')
+      value: Calification[Calification.F],
+      checked: (subject.calification == Calification.F)
+    });
+    
+    alert.addInput({
+      type: 'radio',
+      label: 'Retirada',
+      value: Calification[Calification.R],
+      checked: (subject.calification == Calification.R)
+    });
+    
+    alert.addInput({
+      type: 'radio',
+      label: 'Exonerada',
+      value: Calification[Calification.E],
+      checked: (subject.calification == Calification.E)
+    });
+    
+    alert.addInput({
+      type: 'radio',
+      label: 'Convalidada',
+      value: Calification[Calification.CO],
+      checked: (subject.calification == Calification.CO)
     });
     
     alert.addButton('Cancelar');
     alert.addButton({
       text: 'OK',
       handler: data => {
-        subject.calification = data;
+        subject.calification = Calification[data];
       }
     });
     alert.present();
@@ -108,4 +144,92 @@ export class ProyectionPage implements OnInit {
     });
     confirm.present();
   }
+  
+  addQuarter(): void {
+    // Nos aseguramos que el número de cuatrimestre no excede la cantidad
+    // total de la carrera. Si no excede ni es igual entonces agregamos
+    // el siguiente cuatrimestre.
+    if (this.quarterList.length < this.selectedCareer.pensum.length) {
+      let _quarter = this.selectedCareer.pensum[this.quarterList.length];
+      
+      _quarter.subjects = this.getNotDuplicatedSubjects(_quarter.subjects, this.quarterList);
+      this.quarterList.push(_quarter);
+
+      this.showToast(_quarter.description + ' agregado!');
+    }
+  }
+  
+  removeQuarter(quarter: Quarter): void {
+    let index = this.quarterList.indexOf(quarter);
+    
+    if (index > -1) this.quarterList.splice(index, 1);
+  }
+  
+  showToast(message: string, position: string = 'center'): void {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3*1000,
+      position: position
+    }).present();
+  }
+  
+  // Filtra las asignaturas, para devolver solo las que no se encuentran
+  // ya en targetList.
+  getNotDuplicatedSubjects(copyList: Array<Subject>, targetList: Array<Quarter>) : Array<Subject> {
+    let _list = copyList;
+
+    for (let q of targetList)
+    {
+        for (let idx = 0; idx < q.subjects.length; idx++)
+        {
+          let _index = _list.indexOf(q.subjects[idx]);
+          if (_index > -1)
+          {
+            _list.splice(_index, 1);
+          }
+        }
+    }
+    // Sacar asignaturas con pre-requisitos no aprobados
+    let filtratedList = _list.filter(x => x.pre_requisits.length > 0);
+    for (let _elem of filtratedList)
+    {
+       let pre_requisits = _elem.pre_requisits.split(/\s+/);
+       for (let q of targetList)
+       {
+         let _pre = q.subjects.filter(s => ((pre_requisits.indexOf(s.code) > -1) 
+                                && ((s.calification > Calification.D) && s.calification <= Calification.A )));
+         if (_pre.length > 0)
+         {
+           for (let s of _pre)
+           {
+             let index = _list.indexOf(s);
+             if (index > -1) _list.splice(index, 1);
+           }
+         }
+       }
+    }
+    //
+    
+    return _list;
+  }
+  
+  getCalification(note: Calification) {
+        switch(note) {
+            case Calification.A:
+                // TODO
+            case Calification.B:
+                // TODO
+            case Calification.C:
+                // TODO
+            case Calification.D:
+                // TODO
+            case Calification.F:
+                // TODO
+            case Calification.R:
+            case Calification.E:
+            case Calification.CO:
+            default:
+                // TODO
+        }
+    }
 }

@@ -24,27 +24,26 @@
     
     <ion-item *ngIf="selectedSchool">
       <ion-label>Carrera</ion-label>
-      <ion-select [(ngModel)]="selectedCareer">
+      <ion-select [(ngModel)]="selectedCareer" (ngModelChange)="changeCareer($event)">
         <ion-option ngValue="ca" *ngFor="let ca of careers" [value]="ca">{{ ca.description }}</ion-option> 
       </ion-select>
     </ion-item>
   </ion-list>
   
-  <ion-card>
+  <ion-card *ngIf="selectedCareer">
     <ion-card-content>
-      <ion-label>Indíce Acumulado:</ion-label>
-      <ion-label [(ngModel)]="GPA"></ion-label>
+      <ion-label>Indíce Acumulado: {{ GPA }}</ion-label> 
     </ion-card-content>
   </ion-card>
   
-  <ion-list *ngIf="selectedCareer">
-      <ion-list *ngFor="let quarter of selectedCareer.pensum">
+  <ion-list *ngIf="quarterList">
+      <ion-list *ngFor="let quarter of quarterList">
         <ion-list-header>{{ quarter.description }}</ion-list-header>
           <ion-item *ngFor="let subject of quarter.subjects">
              <h2>{{ subject.code }} - {{ subject.name }}</h2>
              <ion-item no-lines>
                 <ion-avatar item-left>
-                  <img src="assets/images/{{ subject.calification || 'A' }}.png">
+                  <img src="assets/images/{{ Calification[subject.calification] }}.png">
                 </ion-avatar>
                <p>{{ subject.credits }} créditos</p>
                <p>Pre-requisitos: {{ subject.pre_requisits || 'Ninguno'}}</p>
@@ -57,9 +56,14 @@
              </button>
              
           </ion-item>
-          <ion-item>
-             <button ion-fab right color="danger"><ion-icon name="trash"></ion-icon></button>
+          <ion-item *ngIf="quarterList.length > 1">
+             <button ion-fab right color="danger" (click)="removeQuarter(quarter)"><ion-icon name="trash"></ion-icon></button>
           </ion-item>
       </ion-list>
+        <ion-item no-lines *ngIf="selectedCareer">
+          <button ion-fab color="secondary" (click)="addQuarter()">
+              <ion-icon name="add-circle"></ion-icon>
+          </button>
+      </ion-item>
     </ion-list>
 </ion-content>

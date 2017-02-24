@@ -1,7 +1,7 @@
-import { Pensum } from './pensum';
+import { Quarter } from './quarter';
 
 export class Career {
     code: string;
-    pensum: Array<Pensum>;
+    pensum: Array<Quarter>;
     description: string;
 }

@@ -120,7 +120,7 @@ def get_pensum(career):
                                   'name': tds[1].get_text().strip(), 
                                   'credits': int(tds[2].get_text().strip()), 
                                   'pre_requisits': tds[3].get_text().strip(),
-                                  'calification': 'A' # Necesito ese campo en el mapping en la app
+                                  'calification': 4 # Necesito ese campo en el mapping en la app
                            })
         quarters.append({ 'description': ('Cuatrimestre %s' % str(count).zfill(2)), 'subjects': subjects })
         count = count+1

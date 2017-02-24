@@ -1,5 +1,6 @@
 import { Subject } from './subject';
 
-export class Pensum {
+export class Quarter {
     subjects: Array<Subject>;
+    description: string;
 }

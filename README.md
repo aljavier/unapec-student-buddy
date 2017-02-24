@@ -15,4 +15,10 @@ El script hasta ahora ha sido testeado sólo en *Python* 2.x.x, pero debería fu
 
 ### Estatus actual: ###
 
-Creado proyecto Ionic inicial. Trabajando en la app.
+~~Creado proyecto Ionic inicial. Trabajando en la app.~~
+
+Trabajando en calculo de GPA.
+
+### Iniciar servidor en cloud9 ###
+
+ionic serve --host "$IP" --port "$PORT"
