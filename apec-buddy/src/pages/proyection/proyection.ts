@@ -145,17 +145,67 @@ export class ProyectionPage implements OnInit {
     confirm.present();
   }
   
+  addQuarters(quarters: Array<Quarter>): void {
+    let alert = this.alertCtrl.create();
+    alert.setTitle('Cuatrimestres');
+
+    for (var idx = 0; idx < quarters.length; idx++) {
+        if (this.quarterList.indexOf(quarters[idx]) > -1 ) { // Ya esta agregado
+            continue;
+        } else {
+          alert.addInput({
+            type: 'checkbox',
+            label: quarters[idx].description,
+            value: idx.toString(),
+            checked: false
+           });
+        }
+    }
+    
+    alert.addButton('Cancelar');
+    alert.addButton({
+          text: 'OK',
+          handler: data => {
+            console.log(data);
+            let total = 0;
+            let _quarter = null;
+            
+            for (var idx = 0; idx < data.length; idx++) {
+                try {
+                    _quarter = this.selectedCareer.pensum[parseInt(data[idx])];
+                    _quarter.subjects = this.getNotDuplicatedSubjects(_quarter.subjects, this.quarterList);
+                    this.quarterList.push(_quarter);
+                    
+                    total++;
+                  } catch (Error){
+                    console.log("Error intentando agregar cuatrimestre " + data[idx] + ": " + Error.message);
+                }
+            }
+            if (total == 1) {
+                this.showToast(_quarter.description + ' agregado!');
+            } else {
+                this.showToast(total + " cuatrimestres agregado!");
+            }
+          }
+    });
+        
+    alert.present();
+  }
+  
   addQuarter(): void {
     // Nos aseguramos que el número de cuatrimestre no excede la cantidad
     // total de la carrera. Si no excede ni es igual entonces agregamos
     // el siguiente cuatrimestre.
     if (this.quarterList.length < this.selectedCareer.pensum.length) {
-      let _quarter = this.selectedCareer.pensum[this.quarterList.length];
-      
-      _quarter.subjects = this.getNotDuplicatedSubjects(_quarter.subjects, this.quarterList);
-      this.quarterList.push(_quarter);
-
-      this.showToast(_quarter.description + ' agregado!');
+        if (this.quarterList.length == 0) {
+             let _quarter = this.selectedCareer.pensum[this.quarterList.length];
+            
+            _quarter.subjects = this.getNotDuplicatedSubjects(_quarter.subjects, this.quarterList);
+            this.quarterList.push(_quarter);
+            this.showToast(_quarter.description + ' agregado!');
+        } else {
+            this.addQuarters(this.selectedCareer.pensum)       
+        }
     }
   }
   
