@@ -37,7 +37,7 @@
   </ion-card>
  
   <ion-list *ngIf="student.quarterList">
-      <ion-list *ngFor="let quarter of student.quarterList">
+      <ion-list *ngFor="let quarter of student.quarterList; let idx=index">
         <ion-list-header>{{ quarter.description }}</ion-list-header>
           <ion-item *ngFor="let subject of quarter.subjects">
              <h2>{{ subject.code }} - {{ subject.name }}</h2>
@@ -56,7 +56,7 @@
              </button>
           </ion-item>
             <ion-item>
-               <p>Índice Cuatrimestral: {{ student.getQuarterAvg(quarter) }}</p>
+               <p>Índice Cuatrimestral: {{ student.getQuarterAvg(idx) }}</p>
              </ion-item>
           <ion-item no-lines>
              <ion-fab middle left>

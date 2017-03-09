@@ -47,7 +47,6 @@ export class ProyectionPage implements OnInit {
   }
   
   changeCareer(career): void {
-    console.log(career instanceof Career);
     this.student.career = career as Career
     this.student.quarterList.push(this.student.career.pensum[0]); // Agregamos primer cuatrimestre
   }
@@ -166,7 +165,6 @@ export class ProyectionPage implements OnInit {
     alert.addButton({
           text: 'OK',
           handler: data => {
-            console.log(data);
             let total = 0;
             let _quarter = null;
             
