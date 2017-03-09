@@ -9,6 +9,7 @@ import { School } from '../../models/school';
 import { Quarter } from '../../models/quarter';
 import { Career } from '../../models/career';
 import { Subject } from '../../models/subject';
+import { Student } from '../../models/student';
 
 import { Calification } from '../../enums/Calification';
 
@@ -28,10 +29,7 @@ export class ProyectionPage implements OnInit {
   
   schools: Array<School>;
   careers: Array<Career>;
-  selectedSchool: School;
-  selectedCareer: Career;
-  GPA: number = 0.00;
-  quarterList: Array<Quarter>;
+  student = new Student();
   
   constructor(public navCtrl: NavController, public alertCtrl: AlertController,  
       private pensums: PensumsUniv, private toastCtrl: ToastController) { }
@@ -39,17 +37,19 @@ export class ProyectionPage implements OnInit {
   ionViewDidLoad() {  }
 
   ngOnInit(): void {
-     this.pensums.load().then(resp => this.schools = resp);
+     this.pensums.load().then(resp => this.schools = resp as School[]);
   }
   
   changeSchool(selected): void {
        this.careers = selected.careers;
-       this.selectedCareer = null;
-       this.quarterList = Array<Quarter>();
+       this.student = new Student();
+       this.student.school = selected as School;
   }
   
   changeCareer(career): void {
-    this.quarterList.push(career.pensum[0]); // Primer cuatrimestre
+    console.log(career instanceof Career);
+    this.student.career = career as Career
+    this.student.quarterList.push(this.student.career.pensum[0]); // Agregamos primer cuatrimestre
   }
   
   changeCalification(subject): void {
@@ -133,9 +133,9 @@ export class ProyectionPage implements OnInit {
           {
             text: 'Sí',
             handler: () => {
-              let indexQuarter = this.selectedCareer.pensum.indexOf(quarter);
+              let indexQuarter = this.student.career.pensum.indexOf(quarter);
               if (indexQuarter > -1){
-                let index = this.selectedCareer.pensum[indexQuarter].subjects.indexOf(subject);
+                let index = this.student.career.pensum[indexQuarter].subjects.indexOf(subject);
                 if (index > -1) quarter.subjects.splice(index, 1);
               }
             }
@@ -150,7 +150,7 @@ export class ProyectionPage implements OnInit {
     alert.setTitle('Cuatrimestres');
 
     for (var idx = 0; idx < quarters.length; idx++) {
-        if (this.quarterList.indexOf(quarters[idx]) > -1 ) { // Ya esta agregado
+        if (this.student.quarterList.indexOf(quarters[idx]) > -1 ) { // Ya esta agregado
             continue;
         } else {
           alert.addInput({
@@ -172,9 +172,9 @@ export class ProyectionPage implements OnInit {
             
             for (var idx = 0; idx < data.length; idx++) {
                 try {
-                    _quarter = this.selectedCareer.pensum[parseInt(data[idx])];
-                    _quarter.subjects = this.getNotDuplicatedSubjects(_quarter.subjects, this.quarterList);
-                    this.quarterList.push(_quarter);
+                    _quarter = this.student.career.pensum[parseInt(data[idx])];
+                    _quarter.subjects = this.getNotDuplicatedSubjects(_quarter.subjects, this.student.quarterList);
+                    this.student.quarterList.push(_quarter);
                     
                     total++;
                   } catch (Error){
@@ -196,23 +196,24 @@ export class ProyectionPage implements OnInit {
     // Nos aseguramos que el número de cuatrimestre no excede la cantidad
     // total de la carrera. Si no excede ni es igual entonces agregamos
     // el siguiente cuatrimestre.
-    if (this.quarterList.length < this.selectedCareer.pensum.length) {
-        if (this.quarterList.length == 0) {
-             let _quarter = this.selectedCareer.pensum[this.quarterList.length];
+    if (this.student.quarterList.length < this.student.career.pensum.length) {
+       this.addQuarters(this.student.career.pensum);
+        /* if (this.student.quarterList.length == 0) {
+             let _quarter = this.student.career.pensum[this.student.quarterList.length];
             
-            _quarter.subjects = this.getNotDuplicatedSubjects(_quarter.subjects, this.quarterList);
-            this.quarterList.push(_quarter);
+            _quarter.subjects = this.getNotDuplicatedSubjects(_quarter.subjects, this.student.quarterList);
+            this.student.quarterList.push(_quarter);
             this.showToast(_quarter.description + ' agregado!');
         } else {
-            this.addQuarters(this.selectedCareer.pensum)       
-        }
+            this.addQuarters(this.student.career.pensum);       
+        } */
     }
   }
   
   removeQuarter(quarter: Quarter): void {
-    let index = this.quarterList.indexOf(quarter);
+    let index = this.student.quarterList.indexOf(quarter);
     
-    if (index > -1) this.quarterList.splice(index, 1);
+    if (index > -1) this.student.quarterList.splice(index, 1);
   }
   
   showToast(message: string, position: string = 'center'): void {

@@ -17,27 +17,27 @@
   <ion-list>
     <ion-item>
       <ion-label>Escuela</ion-label>
-      <ion-select [(ngModel)]="selectedSchool" (ngModelChange)="changeSchool($event)">
+      <ion-select [(ngModel)]="student.school" (ngModelChange)="changeSchool($event)">
         <ion-option ngValue="sc" *ngFor="let sc of schools" [value]="sc">{{ sc.name }}</ion-option>
       </ion-select>
     </ion-item>
     
-    <ion-item *ngIf="selectedSchool">
+    <ion-item *ngIf="student.school">
       <ion-label>Carrera</ion-label>
-      <ion-select [(ngModel)]="selectedCareer" (ngModelChange)="changeCareer($event)">
+      <ion-select [(ngModel)]="student.career" (ngModelChange)="changeCareer($event)">
         <ion-option ngValue="ca" *ngFor="let ca of careers" [value]="ca">{{ ca.description }}</ion-option> 
       </ion-select>
     </ion-item>
   </ion-list>
   
-  <ion-card *ngIf="selectedCareer">
+  <ion-card *ngIf="student.career">
     <ion-card-content>
-      <ion-label>Indíce Acumulado: {{ GPA }}</ion-label> 
+      <ion-label>Indíce Acumulado: {{ student.getGPA() }}</ion-label> 
     </ion-card-content>
   </ion-card>
  
-  <ion-list *ngIf="quarterList">
-      <ion-list *ngFor="let quarter of quarterList">
+  <ion-list *ngIf="student.quarterList">
+      <ion-list *ngFor="let quarter of student.quarterList">
         <ion-list-header>{{ quarter.description }}</ion-list-header>
           <ion-item *ngFor="let subject of quarter.subjects">
              <h2>{{ subject.code }} - {{ subject.name }}</h2>
@@ -54,8 +54,10 @@
              <button ion-button icon-left (click)="changeCalification(subject)">
                <ion-icon name="paper"></ion-icon>Cambiar Nota
              </button>
-             
           </ion-item>
+            <ion-item>
+               <p>Índice Cuatrimestral: {{ student.getQuarterAvg(quarter) }}</p>
+             </ion-item>
           <ion-item no-lines>
              <ion-fab middle left>
                 <button ion-fab mini color="light"><ion-icon name="arrow-dropright"></ion-icon></button>
@@ -70,7 +72,7 @@
             </ion-fab>
           </ion-item>
       </ion-list>
-        <button bottom right no-lines *ngIf="selectedCareer" ion-fab color="secondary" (click)="addQuarter()">
+        <button bottom right no-lines *ngIf="student.career" ion-fab color="secondary" (click)="addQuarter()">
             <ion-icon name="add-circle"></ion-icon>
         </button>
     </ion-list>
