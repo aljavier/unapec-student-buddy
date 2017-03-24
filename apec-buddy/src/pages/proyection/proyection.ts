@@ -27,6 +27,7 @@ export class ProyectionPage implements OnInit {
   
   public Calification = Calification;
   
+  subjects: Array<Subject>; // Para la modal de agregar asignatura
   schools: Array<School>;
   careers: Array<Career>;
   student = new Student();
@@ -122,26 +123,78 @@ export class ProyectionPage implements OnInit {
   }
   
   deleteSubject(quarter, subject): void {
-    let confirm = this.alertCtrl.create({
-      title: 'Confirmar',
-      message: '¿Esta usted seguro que quiere eliminar esta asignatura de su proyección?',
-      buttons: [
-          {
-            text: 'No',
-          },
-          {
-            text: 'Sí',
-            handler: () => {
-              let indexQuarter = this.student.career.pensum.indexOf(quarter);
+    this.showConfirm('¿Esta usted seguro que quiere eliminar esta asignatura de su proyección?', () => {
+        let indexQuarter = this.student.career.pensum.indexOf(quarter);
               if (indexQuarter > -1){
                 let index = this.student.career.pensum[indexQuarter].subjects.indexOf(subject);
+                
                 if (index > -1) quarter.subjects.splice(index, 1);
               }
+    });
+  }
+  
+  addSubjects(index: number): void {
+    console.log('Addsubjects reporting for duty!');
+    if ((this.subjects == null) || (this.subjects.length == 0)) {
+        this.subjects = Array<Subject>();
+        for (let idx = 0; idx < this.student.quarterList.length; idx++) {
+            this.student.quarterList[idx].subjects.map(x => this.subjects.push(x));
+        }
+    }
+    
+    // Asignaturas no duplicadas y sin pre-requisitos
+    let _quarters : Array<Quarter> = [this.student.quarterList[index]];
+    let copySubjects = this.getNotDuplicatedSubjects(this.subjects, _quarters);
+   
+    if (copySubjects.length == 0)
+    {
+       console.log('No more subjects...');
+       this.showMessage('No asignaturas...', 
+        'No hay más asignaturas sin pre-requisitos que puedas tomar.');
+    
+       return;
+    }
+   
+    let alert = this.alertCtrl.create();
+    alert.setTitle('Asignaturas');
+    
+    for (var idx = 0; idx < copySubjects.length; idx++) {
+        alert.addInput({
+            type: 'checkbox',
+            label: copySubjects[idx].name,
+            value: idx.toString(),
+            checked: false
+        });
+    }
+    
+    alert.addButton('Cancelar');
+    alert.addButton({
+          text: 'OK',
+          handler: data => {
+            let _total = 0;
+            let _subject : Subject = null;
+             
+            for (var idx = 0; idx < data.length; idx++) {
+                try 
+                {
+                    _subject = copySubjects[parseInt(data[idx])];
+                    console.log(this.student.quarterList[idx])
+                    this.student.quarterList[idx].subjects.push(_subject);      
+                    _total++;
+                    
+                  } catch (Error){
+                    console.log("Error intentando agregar cuatrimestre " + data[idx] + ": " + Error.message);
+                }
+            }
+            if (_total == 1) {
+                this.showToast(_subject.name + ' agregado!');
+            } else {
+                this.showToast(_total + " cuatrimestres agregado!");
             }
           }
-        ]
     });
-    confirm.present();
+        
+    alert.present();
   }
   
   addQuarters(quarters: Array<Quarter>): void {
@@ -191,27 +244,19 @@ export class ProyectionPage implements OnInit {
   }
   
   addQuarter(): void {
-    // Nos aseguramos que el número de cuatrimestre no excede la cantidad
-    // total de la carrera. Si no excede ni es igual entonces agregamos
-    // el siguiente cuatrimestre.
     if (this.student.quarterList.length < this.student.career.pensum.length) {
-       this.addQuarters(this.student.career.pensum);
-        /* if (this.student.quarterList.length == 0) {
-             let _quarter = this.student.career.pensum[this.student.quarterList.length];
-            
-            _quarter.subjects = this.getNotDuplicatedSubjects(_quarter.subjects, this.student.quarterList);
-            this.student.quarterList.push(_quarter);
-            this.showToast(_quarter.description + ' agregado!');
-        } else {
-            this.addQuarters(this.student.career.pensum);       
-        } */
+       this.addQuarters(this.student.career.pensum)
     }
   }
   
   removeQuarter(quarter: Quarter): void {
-    let index = this.student.quarterList.indexOf(quarter);
+    this.showConfirm('¿Esta usted seguro que quiere eliminar este cuatrimestre de su proyección?', () => {
+      
+      let index = this.student.quarterList.indexOf(quarter);
     
-    if (index > -1) this.student.quarterList.splice(index, 1);
+      if (index > -1) this.student.quarterList.splice(index, 1);
+        
+      });
   }
   
   showToast(message: string, position: string = 'center'): void {
@@ -262,23 +307,37 @@ export class ProyectionPage implements OnInit {
     return _list;
   }
   
-  getCalification(note: Calification) {
-        switch(note) {
-            case Calification.A:
-                // TODO
-            case Calification.B:
-                // TODO
-            case Calification.C:
-                // TODO
-            case Calification.D:
-                // TODO
-            case Calification.F:
-                // TODO
-            case Calification.R:
-            case Calification.E:
-            case Calification.CO:
-            default:
-                // TODO
-        }
-    }
+  showMessage(title: string, message: string)
+  {
+     let confirm = this.alertCtrl.create({
+      title: title,
+      message: message,
+      buttons: [
+          {
+            text: 'OK',
+          },
+        ]
+    });
+    confirm.present();
+  }
+  
+  showConfirm(message: string, callback: () => any) 
+  {
+    let confirm = this.alertCtrl.create({
+      title: 'Confirmar',
+      message: message,
+      buttons: [
+          {
+            text: 'No',
+          },
+          {
+            text: 'Sí',
+            handler: () => {
+              callback();
+            }
+          }
+        ]
+    });
+    confirm.present();
+  }
 }
