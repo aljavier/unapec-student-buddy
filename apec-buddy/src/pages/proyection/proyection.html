@@ -48,11 +48,11 @@
                <p>{{ subject.credits }} créditos</p>
                <p>Pre-requisitos: {{ subject.pre_requisits || 'Ninguno'}}</p>
              </ion-item>
+             <button ion-button icon-left (click)="changeCalification(subject)">
+                <ion-icon name="paper"></ion-icon>Cambiar Nota
+             </button>
              <button ion-button icon-left color="light" (click)="deleteSubject(quarter, subject)">
                <ion-icon name="trash"></ion-icon>Quitar
-             </button>
-             <button ion-button icon-left (click)="changeCalification(subject)">
-               <ion-icon name="paper"></ion-icon>Cambiar Nota
              </button>
           </ion-item>
             <ion-item>
@@ -66,7 +66,7 @@
                         <ion-icon (click)="removeQuarter(quarter)" name="trash"></ion-icon>
                     </button>
                     <button ion-fab color="primary">
-                        <ion-icon name="create"></ion-icon>
+                        <ion-icon (click)="addSubjects(idx)" name="create"></ion-icon>
                     </button>
                </ion-fab-list>
             </ion-fab>
