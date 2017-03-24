@@ -28,7 +28,7 @@ export class Student {
     getPointsAndCredits(index: number): Array<number> {
       
         if (this.quarterList.length == 0) 
-            return [0.00, 0.00];
+            return [0.00, 1];
         
         let points = 0.0;
         let credits = 0.0;
