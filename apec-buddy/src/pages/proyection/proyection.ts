@@ -156,7 +156,7 @@ export class ProyectionPage implements OnInit {
     }
    
     let alert = this.alertCtrl.create();
-    alert.setTitle('Asignaturas');
+    alert.setTitle('Agregar asignaturas');
     
     for (var idx = 0; idx < copySubjects.length; idx++) {
         alert.addInput({
@@ -178,8 +178,7 @@ export class ProyectionPage implements OnInit {
                 try 
                 {
                     _subject = copySubjects[parseInt(data[idx])];
-                    console.log(this.student.quarterList[idx])
-                    this.student.quarterList[idx].subjects.push(_subject);      
+                    this.student.quarterList[index].subjects.push(_subject);      
                     _total++;
                     
                   } catch (Error){
@@ -224,7 +223,12 @@ export class ProyectionPage implements OnInit {
             for (var idx = 0; idx < data.length; idx++) {
                 try {
                     _quarter = this.student.career.pensum[parseInt(data[idx])];
-                    _quarter.subjects = this.getNotDuplicatedSubjects(_quarter.subjects, this.student.quarterList);
+                    
+                    if (_quarter != this.student.career.pensum[0]) {
+                      console.log("Hay que validar not duplicated y sin pre-requitos!");
+                        _quarter.subjects = this.getNotDuplicatedSubjects(_quarter.subjects, this.student.quarterList);
+                    }
+                   
                     this.student.quarterList.push(_quarter);
                     
                     total++;
@@ -270,6 +274,9 @@ export class ProyectionPage implements OnInit {
   // Filtra las asignaturas, para devolver solo las que no se encuentran
   // ya en targetList.
   getNotDuplicatedSubjects(copyList: Array<Subject>, targetList: Array<Quarter>) : Array<Subject> {
+    
+    if (targetList.length == 0) return Array<Subject>();
+    
     let _list = copyList;
 
     for (let q of targetList)
@@ -290,8 +297,8 @@ export class ProyectionPage implements OnInit {
        let pre_requisits = _elem.pre_requisits.split(/\s+/);
        for (let q of targetList)
        {
-         let _pre = q.subjects.filter(s => ((pre_requisits.indexOf(s.code) > -1) 
-                                && ((s.calification > Calification.D) && s.calification <= Calification.A )));
+         let _pre = q.subjects.filter(s => ((pre_requisits.indexOf(s.code) > -1) // Todas las asignaturas  aprobadas
+                                && ((s.calification > Calification.D) && s.calification <= Calification.A ))); 
          if (_pre.length > 0)
          {
            for (let s of _pre)
