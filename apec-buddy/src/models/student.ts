@@ -5,7 +5,7 @@ import { Career } from './career';
 import { Calification } from '../../enums/Calification';
 
 export class Student {
-    
+  _id: string = "";
   school: School;
   career: Career;
   GPA: number = 0.00;

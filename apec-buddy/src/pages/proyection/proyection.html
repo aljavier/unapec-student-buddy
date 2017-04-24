@@ -18,14 +18,14 @@
     <ion-item>
       <ion-label>Escuela</ion-label>
       <ion-select [(ngModel)]="student.school" (ngModelChange)="changeSchool($event)">
-        <ion-option ngValue="sc" *ngFor="let sc of schools" [value]="sc">{{ sc.name }}</ion-option>
+        <ion-option [value]="sc" *ngFor="let sc of schools">{{ sc.name }}</ion-option>
       </ion-select>
     </ion-item>
     
     <ion-item *ngIf="student.school">
       <ion-label>Carrera</ion-label>
       <ion-select [(ngModel)]="student.career" (ngModelChange)="changeCareer($event)">
-        <ion-option ngValue="ca" *ngFor="let ca of careers" [value]="ca">{{ ca.description }}</ion-option> 
+        <ion-option [value]="ca" *ngFor="let ca of careers">{{ ca.description }}</ion-option> 
       </ion-select>
     </ion-item>
   </ion-list>

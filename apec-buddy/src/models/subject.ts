@@ -1,6 +1,7 @@
 import { Calification } from '../enums/Calification';
 
 export class Subject {
+    _id: string = "";
     code: string;
     name: string;
     credits: number;

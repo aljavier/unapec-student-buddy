@@ -13,6 +13,8 @@ import { Student } from '../../models/student';
 
 import { Calification } from '../../enums/Calification';
 
+import * as PouchDB from 'pouchdb';
+
 /*
   Generated class for the Proyection page.
 
@@ -31,14 +33,20 @@ export class ProyectionPage implements OnInit {
   schools: Array<School>;
   careers: Array<Career>;
   student = new Student();
+  db: any;
+  db_name: string = 'proyection.db';
   
   constructor(public navCtrl: NavController, public alertCtrl: AlertController,  
-      private pensums: PensumsUniv, private toastCtrl: ToastController) { }
-
-  ionViewDidLoad() {  }
-
+      private pensums: PensumsUniv, private toastCtrl: ToastController) {
+        
+        this.db = new PouchDB(this.db_name);
+  }
+  
   ngOnInit(): void {
-     this.pensums.load().then(resp => this.schools = resp as School[]);
+      this.pensums.load().then(resp => {
+          this.schools = resp as School[];
+          this.getProyection();
+      });
   }
   
   changeSchool(selected): void {
@@ -185,10 +193,14 @@ export class ProyectionPage implements OnInit {
                     console.log("Error intentando agregar cuatrimestre " + data[idx] + ": " + Error.message);
                 }
             }
-            if (_total == 1) {
-                this.showToast(_subject.name + ' agregado!');
-            } else {
-                this.showToast(_total + " cuatrimestres agregado!");
+            
+            if (_total > 0) {
+              if (_total == 1) {
+                  this.showToast(_subject.name + ' agregado!');
+              } else {
+                  this.showToast(_total + " cuatrimestres agregado!");
+              }
+              this.save();
             }
           }
     });
@@ -225,7 +237,6 @@ export class ProyectionPage implements OnInit {
                     _quarter = this.student.career.pensum[parseInt(data[idx])];
                     
                     if (_quarter != this.student.career.pensum[0]) {
-                      console.log("Hay que validar not duplicated y sin pre-requitos!");
                         _quarter.subjects = this.getNotDuplicatedSubjects(_quarter.subjects, this.student.quarterList);
                     }
                    
@@ -236,10 +247,13 @@ export class ProyectionPage implements OnInit {
                     console.log("Error intentando agregar cuatrimestre " + data[idx] + ": " + Error.message);
                 }
             }
-            if (total == 1) {
-                this.showToast(_quarter.description + ' agregado!');
-            } else {
-                this.showToast(total + " cuatrimestres agregado!");
+            if (total > 0) {
+                if (total == 1) {
+                    this.showToast(_quarter.description + ' agregado!');
+                } else {
+                    this.showToast(total + " cuatrimestres agregado!");
+                }
+                this.save();
             }
           }
     });
@@ -249,18 +263,22 @@ export class ProyectionPage implements OnInit {
   
   addQuarter(): void {
     if (this.student.quarterList.length < this.student.career.pensum.length) {
-       this.addQuarters(this.student.career.pensum)
+       this.addQuarters(this.student.career.pensum);
     }
   }
   
   removeQuarter(quarter: Quarter): void {
     this.showConfirm('¿Esta usted seguro que quiere eliminar este cuatrimestre de su proyección?', () => {
       
-      let index = this.student.quarterList.indexOf(quarter);
-    
-      if (index > -1) this.student.quarterList.splice(index, 1);
+        let index = this.student.quarterList.indexOf(quarter);
+      
+        if (index > -1) 
+        {
+          this.student.quarterList.splice(index, 1);
+          this.save();
+        }
         
-      });
+     });
   }
   
   showToast(message: string, position: string = 'center'): void {
@@ -347,4 +365,54 @@ export class ProyectionPage implements OnInit {
     });
     confirm.present();
   }
+
+  save() {
+    console.log("here is student!!!!");
+    console.log(this.student);
+    if ((this.student != null) && (this.student.quarterList.length > 0)) {
+        var data = {
+          _id: "proyection",
+          _rev: "",
+          student: this.student
+        };
+        var self = this; // Insane!
+        // Ref. https://github.com/pouchdb/pouchdb/issues/1691#issuecomment-38112213
+        this.db.get(data._id).then(function (oldData) {
+          data._rev = oldData._rev;
+          console.log("I'm going to save...");
+          console.log(data);
+          return self.db.put(data);
+        }).catch(function (err) {
+          if (err.status == 409) {
+            return self.save(); // Crazy, right?
+          } else { // new data
+          console.log("this is data..");
+          console.log(data);
+            return self.db.put(data);
+          }
+        });
+        
+        console.log("Guardado!");
+    }
+  }
+  
+  getProyection() {
+    var _data = this.db.get("proyection").catch(function (err) {
+      if (err.name == 'not_found') {
+        return {
+          _id: "proyection",
+          _rev: "",
+          student: new Student()
+        };
+      }
+    }).then(resp => {
+          this.student.school =  this.schools.filter(x => x.code == resp.student.school.code)[0];
+          this.careers = this.student.school.careers;
+          this.student.career = this.careers.filter(x => x.code == resp.student.career.code)[0];
+          this.student.quarterList = resp.student.quarterList;
+      }).catch(err => {
+       console.log("Error getting stored proyection: " + err);
+    });
+  }
+
 }
