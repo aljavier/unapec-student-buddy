@@ -23,4 +23,4 @@ ionic serve --host "$IP" --port "$PORT"
 
 ~~Trabajando en calculo de GPA.~~
 
-~~Trabajando en horario de estudiante.~~
+Trabajando en horario de estudiante.
