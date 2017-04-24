@@ -21,4 +21,6 @@ ionic serve --host "$IP" --port "$PORT"
 
 ~~Creado proyecto Ionic inicial. Trabajando en la app.~~
 
-Trabajando en calculo de GPA.
+~~Trabajando en calculo de GPA.~~
+
+~~Trabajando en horario de estudiante.~~
