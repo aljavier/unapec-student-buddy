@@ -1,5 +1,9 @@
 #!/bin/env python
 # -*- coding: utf-8 -*-
+# 
+# Este es un simple crawler que obtiene todos los pensums
+# de todas las carreras de UNAPEC y los guarda en un archivo 
+# en formato json, el archivo tendré el nombre en OUTPUT_FILE.
 
 from bs4 import BeautifulSoup
 import urllib2
