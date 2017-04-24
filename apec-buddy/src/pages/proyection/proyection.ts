@@ -136,7 +136,10 @@ export class ProyectionPage implements OnInit {
               if (indexQuarter > -1){
                 let index = this.student.career.pensum[indexQuarter].subjects.indexOf(subject);
                 
-                if (index > -1) quarter.subjects.splice(index, 1);
+                if (index > -1) {
+                  quarter.subjects.splice(index, 1);
+                  this.save();
+                }
               }
     });
   }
