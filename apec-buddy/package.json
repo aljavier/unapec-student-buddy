@@ -18,16 +18,21 @@
     "@angular/platform-browser-dynamic": "2.1.1",
     "@angular/platform-server": "2.1.1",
     "@ionic/storage": "1.1.6",
+    "@types/pouchdb": "5.4.28",
     "ionic-angular": "2.0.0-rc.2",
     "ionic-native": "2.2.3",
     "ionicons": "3.0.0",
+    "pouchdb": "^6.2.0",
     "rxjs": "5.0.0-beta.12",
     "zone.js": "0.6.21"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "0.0.44",
+    "@ionic/app-scripts": "1.1.4",
+    "@ionic/cli-plugin-cordova": "^1.0.0-rc.2",
+    "@ionic/cli-plugin-ionic-angular": "^1.0.0-rc.2",
     "@types/pouchdb": "^5.4.28",
-    "typescript": "2.0.6"
+    "sw-toolbox": "^3.6.0",
+    "typescript": "*"
   },
   "cordovaPlugins": [
     "cordova-plugin-whitelist",
