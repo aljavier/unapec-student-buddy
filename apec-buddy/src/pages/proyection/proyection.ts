@@ -9,6 +9,7 @@ import { Quarter } from '../../models/quarter';
 import { Career } from '../../models/career';
 import { Subject } from '../../models/subject';
 import { Student } from '../../models/student';
+import { Logger } from '../../utilities/logger';
 
 import { Calification } from '../../enums/Calification';
 
@@ -144,7 +145,7 @@ export class ProyectionPage implements OnInit {
   }
 
   addSubjects(index: number): void {
-    console.log('Addsubjects reporting for duty!');
+    Logger.log('Addsubjects reporting for duty!');
     if ((this.subjects == null) || (this.subjects.length == 0)) {
         this.subjects = Array<Subject>();
         for (let idx = 0; idx < this.student.quarterList.length; idx++) {
@@ -158,7 +159,7 @@ export class ProyectionPage implements OnInit {
 
     if (copySubjects.length == 0)
     {
-       console.log('No more subjects...');
+       Logger.log('No more subjects...');
        this.showMessage('No asignaturas...',
         'No hay más asignaturas sin pre-requisitos que puedas tomar.');
 
@@ -192,7 +193,7 @@ export class ProyectionPage implements OnInit {
                     _total++;
 
                   } catch (Error){
-                    console.log("Error intentando agregar cuatrimestre " + data[idx] + ": " + Error.message);
+                    Logger.log("Error intentando agregar cuatrimestre " + data[idx] + ": " + Error.message);
                 }
             }
 
@@ -246,7 +247,7 @@ export class ProyectionPage implements OnInit {
 
                     total++;
                   } catch (Error){
-                    console.log("Error intentando agregar cuatrimestre " + data[idx] + ": " + Error.message);
+                    Logger.log("Error intentando agregar cuatrimestre " + data[idx] + ": " + Error.message);
                 }
             }
             if (total > 0) {
@@ -369,8 +370,8 @@ export class ProyectionPage implements OnInit {
   }
 
   save() {
-    console.log("here is student!!!!");
-    console.log(this.student);
+    Logger.log("here is student!!!!");
+    Logger.log(this.student);
     if ((this.student != null) && (this.student.quarterList.length > 0)) {
         var data = {
           _id: "proyection",
@@ -381,20 +382,20 @@ export class ProyectionPage implements OnInit {
         // Ref. https://github.com/pouchdb/pouchdb/issues/1691#issuecomment-38112213
         this.db.get(data._id).then(function (oldData) {
           data._rev = oldData._rev;
-          console.log("I'm going to save...");
-          console.log(data);
+          Logger.log("I'm going to save...");
+          Logger.log(data);
           return self.db.put(data);
         }).catch(function (err) {
           if (err.status == 409) {
             return self.save(); // Crazy, right?
           } else { // new data
-          console.log("this is data..");
-          console.log(data);
+          Logger.log("this is data..");
+          Logger.log(data);
             return self.db.put(data);
           }
         });
 
-        console.log("Guardado!");
+        Logger.log("Guardado!");
     }
   }
 
@@ -413,7 +414,7 @@ export class ProyectionPage implements OnInit {
           this.student.career = this.careers.filter(x => x.code == resp.student.career.code)[0];
           this.student.quarterList = resp.student.quarterList;
       }).catch(err => {
-       console.log("Error getting stored proyection: " + err);
+       Logger.log("Error getting stored proyection: " + err);
     });
   }
 
