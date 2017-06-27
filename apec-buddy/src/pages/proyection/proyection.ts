@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController, ToastController } from 'ionic-angular';
 import { PensumsUniv } from '../../providers/pensums-univ';
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
@@ -10,6 +11,7 @@ import { Career } from '../../models/career';
 import { Subject } from '../../models/subject';
 import { Student } from '../../models/student';
 import { Logger } from '../../utilities/logger';
+import { UIHelper } from '../../utilities/uihelper';
 
 import { Calification } from '../../enums/Calification';
 
@@ -61,91 +63,30 @@ export class ProyectionPage implements OnInit {
   }
 
   changeCalification(subject): void {
-    let alert = this.alertCtrl.create();
-    alert.setTitle('Calificación');
 
-    alert.addInput({
-      type: 'radio',
-      label: 'A (90-100)',
-      value: Calification[Calification.A],
-      checked: (subject.calification == Calification.A)
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'B (80-89)',
-      value: Calification[Calification.B],
-      checked: (subject.calification == Calification.B)
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'C (70-79)',
-      value: Calification[Calification.C],
-      checked: (subject.calification == Calification.C)
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'D (60-69, Reprobado)',
-      value: Calification[Calification.D],
-      checked: (subject.calification == Calification.D)
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'F (0-59, Reprobado)',
-      value: Calification[Calification.F],
-      checked: (subject.calification == Calification.F)
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'Retirada',
-      value: Calification[Calification.R],
-      checked: (subject.calification == Calification.R)
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'Exonerada',
-      value: Calification[Calification.E],
-      checked: (subject.calification == Calification.E)
-    });
-
-    alert.addInput({
-      type: 'radio',
-      label: 'Convalidada',
-      value: Calification[Calification.CO],
-      checked: (subject.calification == Calification.CO)
-    });
-
-    alert.addButton('Cancelar');
-    alert.addButton({
-      text: 'OK',
-      handler: data => {
-        subject.calification = Calification[data];
-      }
-    });
-    alert.present();
+    UIHelper.newCalificationModal(this.alertCtrl, subject, data => {
+      subject.calification = Calification[data];
+    }).present();
   }
 
   deleteSubject(quarter, subject): void {
-    this.showConfirm('¿Esta usted seguro que quiere eliminar esta asignatura de su proyección?', () => {
-        let indexQuarter = this.student.career.pensum.indexOf(quarter);
-              if (indexQuarter > -1){
-                let index = this.student.career.pensum[indexQuarter].subjects.indexOf(subject);
+    var msg = '¿Esta usted seguro que quiere eliminar esta asignatura de su proyección?';
 
-                if (index > -1) {
-                  quarter.subjects.splice(index, 1);
-                  this.save();
-                }
+    UIHelper.showConfirm(this.alertCtrl, msg, () => {
+          let indexQuarter = this.student.career.pensum.indexOf(quarter);
+
+          if (indexQuarter > -1){
+              let index = this.student.career.pensum[indexQuarter].subjects.indexOf(subject);
+
+              if (index > -1) {
+                quarter.subjects.splice(index, 1);
+                this.save();
               }
+            }
     });
   }
 
   addSubjects(index: number): void {
-    Logger.log('Addsubjects reporting for duty!');
     if ((this.subjects == null) || (this.subjects.length == 0)) {
         this.subjects = Array<Subject>();
         for (let idx = 0; idx < this.student.quarterList.length; idx++) {
@@ -159,120 +100,57 @@ export class ProyectionPage implements OnInit {
 
     if (copySubjects.length == 0)
     {
-       Logger.log('No more subjects...');
-       this.showMessage('No asignaturas...',
+       UIHelper.showMessage(this.alertCtrl, 'No asignaturas...',
         'No hay más asignaturas sin pre-requisitos que puedas tomar.');
 
        return;
     }
 
-    let alert = this.alertCtrl.create();
-    alert.setTitle('Agregar asignaturas');
-
-    for (var idx = 0; idx < copySubjects.length; idx++) {
-        alert.addInput({
-            type: 'checkbox',
-            label: copySubjects[idx].name,
-            value: idx.toString(),
-            checked: false
-        });
-    }
-
-    alert.addButton('Cancelar');
-    alert.addButton({
+    let okButton = {
           text: 'OK',
           handler: data => {
             let _total = 0;
             let _subject : Subject = null;
-
             for (var idx = 0; idx < data.length; idx++) {
-                try
-                {
+                try {
                     _subject = copySubjects[parseInt(data[idx])];
                     this.student.quarterList[index].subjects.push(_subject);
                     _total++;
-
-                  } catch (Error){
+                } catch (Error){
                     Logger.log("Error intentando agregar cuatrimestre " + data[idx] + ": " + Error.message);
                 }
             }
-
             if (_total > 0) {
               if (_total == 1) {
-                  this.showToast(_subject.name + ' agregado!');
+                  UIHelper.showToast(this.toastCtrl, _subject.name + ' agregado!')
               } else {
-                  this.showToast(_total + " cuatrimestres agregado!");
+                  UIHelper.showToast(this.toastCtrl, _total + " cuatrimestres agregado!");
               }
               this.save();
             }
           }
-    });
+    };
+    let buttons = ["Cancelar", okButton];
 
-    alert.present();
-  }
-
-  addQuarters(quarters: Array<Quarter>): void {
-    let alert = this.alertCtrl.create();
-    alert.setTitle('Cuatrimestres');
-
-    for (var idx = 0; idx < quarters.length; idx++) {
-        if (this.student.quarterList.indexOf(quarters[idx]) > -1 ) { // Ya esta agregado
-            continue;
-        } else {
-          alert.addInput({
-            type: 'checkbox',
-            label: quarters[idx].description,
-            value: idx.toString(),
-            checked: false
-           });
-        }
-    }
-
-    alert.addButton('Cancelar');
-    alert.addButton({
-          text: 'OK',
-          handler: data => {
-            let total = 0;
-            let _quarter = null;
-
-            for (var idx = 0; idx < data.length; idx++) {
-                try {
-                    _quarter = this.student.career.pensum[parseInt(data[idx])];
-
-                    if (_quarter != this.student.career.pensum[0]) {
-                        _quarter.subjects = this.getNotDuplicatedSubjects(_quarter.subjects, this.student.quarterList);
-                    }
-
-                    this.student.quarterList.push(_quarter);
-
-                    total++;
-                  } catch (Error){
-                    Logger.log("Error intentando agregar cuatrimestre " + data[idx] + ": " + Error.message);
-                }
-            }
-            if (total > 0) {
-                if (total == 1) {
-                    this.showToast(_quarter.description + ' agregado!');
-                } else {
-                    this.showToast(total + " cuatrimestres agregado!");
-                }
-                this.save();
-            }
-          }
-    });
-
-    alert.present();
+    UIHelper.newSubjectsModal(this.alertCtrl, copySubjects, buttons).present();
   }
 
   addQuarter(): void {
     if (this.student.quarterList.length < this.student.career.pensum.length) {
-       this.addQuarters(this.student.career.pensum);
+       let newQuarter = this.student.career.pensum[this.student.quarterList.length];
+       newQuarter.subjects = this.getNotDuplicatedSubjects(newQuarter.subjects, this.student.quarterList);
+       this.student.quarterList.push(newQuarter);
+
+       this.save();
+
+       UIHelper.showToast(this.toastCtrl, newQuarter.description + ' agregado!');
     }
   }
 
   removeQuarter(quarter: Quarter): void {
-    this.showConfirm('¿Esta usted seguro que quiere eliminar este cuatrimestre de su proyección?', () => {
+    let msg = '¿Esta usted seguro que quiere eliminar este cuatrimestre de su proyección?';
 
+    UIHelper.showConfirm(this.alertCtrl, msg, () => {
         let index = this.student.quarterList.indexOf(quarter);
 
         if (index > -1)
@@ -280,16 +158,7 @@ export class ProyectionPage implements OnInit {
           this.student.quarterList.splice(index, 1);
           this.save();
         }
-
-     });
-  }
-
-  showToast(message: string, position: string = 'center'): void {
-    this.toastCtrl.create({
-      message: message,
-      duration: 3*1000,
-      position: position
-    }).present();
+    });
   }
 
   // Filtra las asignaturas, para devolver solo las que no se encuentran
@@ -333,40 +202,6 @@ export class ProyectionPage implements OnInit {
     //
 
     return _list;
-  }
-
-  showMessage(title: string, message: string)
-  {
-     let confirm = this.alertCtrl.create({
-      title: title,
-      message: message,
-      buttons: [
-          {
-            text: 'OK',
-          },
-        ]
-    });
-    confirm.present();
-  }
-
-  showConfirm(message: string, callback: () => any)
-  {
-    let confirm = this.alertCtrl.create({
-      title: 'Confirmar',
-      message: message,
-      buttons: [
-          {
-            text: 'No',
-          },
-          {
-            text: 'Sí',
-            handler: () => {
-              callback();
-            }
-          }
-        ]
-    });
-    confirm.present();
   }
 
   save() {
